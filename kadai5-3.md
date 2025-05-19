@@ -19,7 +19,7 @@
     * 犬の画像をランダムで返す
 * リクエストとレスポンスのフォーマット
   * リクエストのフォーマット
-    * https://dog.ceo/api/breeds/image/
+    * GET https://dog.ceo/api/breeds/image/
   * レスポンスのフォーマット
     * statusと画像のURL
 ### Q3-3. 感想
