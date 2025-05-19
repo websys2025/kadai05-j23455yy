@@ -9,6 +9,7 @@
         郵便番号：<input type="text" name="zipcode">
         <button type="button" id="btn1" onclick="zip_api(this.form)">実行</button>
     </p></form>
+    <p id="information"></p>
     
     <div id="result">結果はここに表示</div>
     <script>
@@ -17,9 +18,30 @@
             // ここにコードを書く
             // zipcloudのAPI呼び出して結果を表示する
             const response = await fetch(`${endpoint}?zipcode=${myForm.zipcode.value}`);
-            const address = await response.text();
+            const data = await response.json();
 
-            document.getElementById("result").innerHTML =  address; // 現状ではそのまま表示しているだけ
+            let address = "";
+
+            if (data.status == 400) {
+                document.getElementById("information").innerText = data.message;
+            }else if (data.status == 500) {
+                document.getElementById("information").innerText = data.message;
+            }else {
+                document.getElementById("information").innerText = "【検索結果】"
+
+                const address_data = data.results;
+
+                if(!address_data) {
+                    document.getElementById("information").innerText = "対応する住所が見つかりませんでした"
+                }
+
+                for (const result of address_data) {
+                    address = `${address}${result.address1}${result.address2}${result.address3}<br>`
+
+                }
+            }
+
+            document.getElementById("result").innerHTML =  address;
         }
     </script>
 </body>
