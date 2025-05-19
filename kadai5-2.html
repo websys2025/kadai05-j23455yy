@@ -6,15 +6,19 @@
 <body>
     <h1 id="msg">何かのAPI</h1>
     <form name="apiform"><p>
-        何かのフォーム：<input type="text" name="form_data">
-        <button type="button" id="btn1" onclick="some_api(this.form)">実行</button>
+        <button type="button" id="btn1" onclick="some_api(this.form)">犬をランダム表示</button>
     </p></form>
     
-    <div id="result"></div>
+    <img id="result"></img>
     <script>
         async function some_api(myForm) {
             // ここにコードを書く
-            document.getElementById("result").innerHTML += myForm.form_data.value+"<br />";
+
+            const endpoint = "https://dog.ceo/api/breeds/image/random"
+            const response = await fetch(`${endpoint}`);
+            const data = await response.json();
+            
+            document.getElementById("result").src = data.message;
             document.apiform.reset();
         }
     </script>
